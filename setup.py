@@ -22,7 +22,6 @@ setup(
                       'scipy==1.3.1',
                       'tensorflow==2.5.0',
                       'termcolor==1.1.0',
-                      'torch==1.9.0+cu111',
                       'tqdm==4.40.2'
                       ],
     zip_safe=False)
