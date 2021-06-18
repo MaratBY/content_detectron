@@ -5,7 +5,7 @@ setup(
     name="content detectron",
     description="The package can detect intros, outros, previews in the video file",
     url="https://github.com/Marat-BY/content_detectron",
-    author="Moonbug Ltd. Data Science R&D team",
+    author="Marat_BY",
     author_email="none@none.com",
     license="MIT",
     packages=find_packages(),
