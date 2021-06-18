@@ -112,3 +112,54 @@ def convert_to_sec(time):
 			return -1
 
 
+def skip_timestamps_in_file(filename, df):
+	"""
+	Searching in pandas dataFrame to extract
+	the annotations for the given filename.
+	:param filename: the name of the file
+	:param df: csv file where annotations located
+				read in the form of pandas dataFrame
+	:return: result
+	"""
+	result = []
+	try:
+		row = df.loc[df['filename'] == filename].to_dict(orient='records')[0]
+
+		if not row["recap_start"] == -1:
+			result.append((row["recap_start"], row["recap_end"]))
+
+		if not row["openingcredits_start"] == -1:
+			result.append((row["openingcredits_start"], row["openingcredits_end"]))
+
+		if not row["preview_start"] == -1:
+			result.append((row["preview_start"], row["preview_end"]))
+
+		if not row["closingcredits_start"] == -1:
+			result.append((row["closingcredits_start"], row["closingcredits_end"]))
+	except:
+		raise Exception(f"The file {filename} is not supported or corrupted.")
+
+	return merge_timestamps(result)
+
+
+def get_annotations(filename):
+	"""
+	The function get_annotations(filename) provides
+	the annotations from the file in the form of
+	pandas dataFrame object.
+	:param filename: filename
+	:return: annotations
+	"""
+	annotations = pd.read_csv(filename).dropna(how="all")
+	# the beauty building :)
+	annotations["recap_start"] = annotations["recap_start"].apply(convert_to_sec)
+	annotations["recap_end"] = annotations["recap_end"].apply(convert_to_sec)
+	annotations["openingcredits_start"] = annotations["openingcredits_start"].apply(convert_to_sec)
+	annotations["openingcredits_end"] = annotations["openingcredits_end"].apply(convert_to_sec)
+	annotations["preview_start"] = annotations["preview_start"].apply(convert_to_sec)
+	annotations["preview_end"] = annotations["preview_end"].apply(convert_to_sec)
+	annotations["closingcredits_start"] = annotations["closingcredits_start"].apply(convert_to_sec)
+	annotations["closingcredits_end"] = annotations["closingcredits_end"].apply(convert_to_sec)
+
+	return annotations
+
