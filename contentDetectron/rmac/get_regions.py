@@ -16,7 +16,7 @@ def get_size_vgg_feature_map(input_w, input_h):
 	for i in range(1, 6):
 		output_h = np.floor(output_h/2)
 		output_w = np.floor(output_w/2)
-	return  output_w, output_h
+	return output_w, output_h
 
 
 def rmac_regions(width, height, length):
