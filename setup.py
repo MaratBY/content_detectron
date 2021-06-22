@@ -10,18 +10,18 @@ setup(
     license="MIT",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['dataclasses==0.8',
-                      'ffmpeg-python==0.2.0',
-                      'Keras==2.2.4',
-                      'numpy==1.19.5',
-                      'opencv-python==4.1.1.26',
-                      'packaging==20.9',
-                      'Pillow==8.2.0',
-                      'pytest==6.0.2',
-                      'PyYAML==5.4.1',
-                      'scipy==1.3.1',
-                      'tensorflow==2.5.0',
-                      'termcolor==1.1.0',
-                      'tqdm==4.40.2'
-                      ],
-    zip_safe=False)
+    install_requires=[
+                    'Keras==2.2.4',
+                    'Pillow==6.1.0',
+                    'ffmpeg_python==0.2.0',
+                    'matplotlib==3.1.1',
+                    'opencv_python==4.1.1.26',
+                    'pandas==0.25.0',
+                    'scipy==1.3.1',
+                    'tqdm==4.40.2',
+                    'natsort==6.2.0',
+                    'tensorflow==1.14',
+                    'numpy==1.16.2',
+                    'pytest==6.0.2'
+      ],
+      zip_safe=False)
