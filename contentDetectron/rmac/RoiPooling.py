@@ -3,32 +3,6 @@ import keras.backend as K
 
 
 class RoiPooling(Layer):
-	"""
-	Roi pooling layer -> is a part of region pooling for object index.
-	Part of utils for the model called RMAC - Regional Maximum Activations of
-	Convolutions (RMAC) feature extractor for Keras.
-
-	:arguments
-	==========
-	pool_list: list of ints/int32/int64
-				List of pooling regions to use. The length of the list is the
-				number of pooling regions, each int in the list is the number
-				of regions in that pool. E.g. [1, 8, 3] will be 3 regions (for
-				each channel) with 1, 8x8 and 3x3 max pools (or avg pools), so
-				output will be the 21 outputs per feature map.
-	num_rois: number of regions of interest to be used in the Layer.
-
-	:input_shape
-	============
-		list of two 4D tensors [X_img, X_roi] with shape:
-		X_img: (1, channels, height, width) if dim='th'
-				or 4D tensor with the following shape:
-				(1, channels, height, width) if dim='tf'
-		X_roi: (1, num_rois, 4) list of rois with ordering (x,y,w,h)
-
-	:output_shape
-		3D tensor with shape: (1, num_rois, channels * sum([i*i for i in pool_list])
-	"""
 	def __init__(self, pool_list, num_rois, **kwargs):
 		super(RoiPooling, self).__init__(**kwargs)
 		self.dim_ordering = K.image_dim_ordering()

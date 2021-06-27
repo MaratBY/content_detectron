@@ -1,17 +1,8 @@
 from __future__ import division
 import numpy as np
-import json
 
 
 def get_size_vgg_feature_map(input_w, input_h):
-	"""
-	function get_size_vgg_feature_map(w, h)
-	returns the size of the feature map for vgg
-	neural network model
-	:param input_w: the width array of the image
-	:param input_h: the height array of the image
-	:return: (width, height) for the feature map
-	"""
 	output_w, output_h = input_w, input_h
 	for i in range(1, 6):
 		output_h = np.floor(output_h/2)

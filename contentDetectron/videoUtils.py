@@ -3,31 +3,13 @@ import ffmpeg
 
 
 def get_framerate(video_file):
-	"""
-	Function get_framerate(video_file).
-	Using pre-builtins of ffmpeg methods
-	returns the value of framerate for the
-	video file provided.
-	:param video_file: str video file name in form of local link,
-					e.g. './videos/video_one.mp4'
-	:return: int framerate per video file measured in fps (frames per second).
-	"""
 	video = cv2.VideoCapture(video_file)
 	return video.get(cv2.CAP_PROP_FPS)
 
 
 def resize(video_file, outfile, resize_width):
-	"""
-	Function resize(input, output, resize_width).
-	Using the pre-builtings of ffmpeg methods
-	resizes a video file to provided resize_width ratio.
-	:param video_file: video file in the form of an array or raw.
-	:param outfile: resized video
-	:param resize_width: resize_width ratio.
-	:return: resized video.
-	"""
 	video = cv2.VideoCapture(video_file)
-	frame_count = get_framerate(video)
+	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 
 	if frame_count > 0:
 		stream = ffmpeg.input(video_file)

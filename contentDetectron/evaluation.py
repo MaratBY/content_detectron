@@ -4,28 +4,10 @@ import math
 
 
 def count_overlap(first_interval, second_interval):
-	"""
-	Calculation the overlapping amount between two intervals
-	in the format of cartesian coordinates like (x, y), e.g.:
-					input: (0, 23), (2, 23)
-					output: abs(2) -> 2
-	:param first_interval: a numpy array or list
-							with interval of the video
-	:param second_interval: a numpy array or list
-							with interval of the video
-	:return: int -> number of overlapping frames in the video.
-	"""
 	return max(0, min(first_interval[1], second_interval[1]) - max(first_interval[0], second_interval[0]))
 
 
 def timestamps_summation(timestamps):
-	"""
-	The function timestamps_summation(timestamps) calculates
-	the total number of seconds in the list with timestamps in
-	the format of tuple --> (start, end).
-	:param timestamps: timestamps located in the list
-	:return: (tuple) --> (start, end).
-	"""
 	total_timestamps = 0
 	for start, end in timestamps:
 		total_timestamps += end - start
@@ -33,16 +15,6 @@ def timestamps_summation(timestamps):
 
 
 def precision_recall_detections_score(detected, ground_truth, verbose=False):
-	"""
-	The function precision_recall_detections_score(*args) takes lists
-	with predictions and ground truth and compares its timestamps and
-	calculates precision and recall scores based on the process of
-	comparison.
-	:param detected: array of detected values
-	:param ground_truth: array of true values
-	:param verbose: False
-	:return: precision_recall score
-	"""
 	if verbose:
 		print(f"Processing the results...\nDetected: \t \t {detected}\nGround truth: \t \t {ground_truth}")
 
@@ -72,12 +44,6 @@ def precision_recall_detections_score(detected, ground_truth, verbose=False):
 
 
 def merge_timestamps(timestamps):
-	"""
-	The function merge_timestamps(timestamps).
-	Merges timestamps located in list if they are less than 2 seconds.
-	:param timestamps: timestamps
-	:return: list of merged timestamps
-	"""
 	result = []
 	i = 0
 	while i < len(timestamps):
@@ -96,12 +62,6 @@ def merge_timestamps(timestamps):
 
 
 def convert_to_sec(time):
-	"""
-	Function convert_to_sec(time) converts string to the
-	format  hh:mm:ss to total number of seconds float.
-	:param time: string of time in the format hh:mm:ss
-	:return: float(seconds_calculated)
-	"""
 	if time is None:
 		return -1
 	try:
@@ -113,14 +73,6 @@ def convert_to_sec(time):
 
 
 def skip_timestamps_in_file(filename, df):
-	"""
-	Searching in pandas dataFrame to extract
-	the annotations for the given filename.
-	:param filename: the name of the file
-	:param df: csv file where annotations located
-				read in the form of pandas dataFrame
-	:return: result
-	"""
 	result = []
 	try:
 		row = df.loc[df['filename'] == filename].to_dict(orient='records')[0]
@@ -143,13 +95,6 @@ def skip_timestamps_in_file(filename, df):
 
 
 def get_annotations(filename):
-	"""
-	The function get_annotations(filename) provides
-	the annotations from the file in the form of
-	pandas dataFrame object.
-	:param filename: filename
-	:return: annotations
-	"""
 	annotations = pd.read_csv(filename).dropna(how="all")
 	# the beauty building :)
 	annotations["recap_start"] = annotations["recap_start"].apply(convert_to_sec)
@@ -160,6 +105,4 @@ def get_annotations(filename):
 	annotations["preview_end"] = annotations["preview_end"].apply(convert_to_sec)
 	annotations["closingcredits_start"] = annotations["closingcredits_start"].apply(convert_to_sec)
 	annotations["closingcredits_end"] = annotations["closingcredits_end"].apply(convert_to_sec)
-
 	return annotations
-

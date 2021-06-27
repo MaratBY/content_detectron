@@ -1,22 +1,21 @@
 from __future__ import division, print_function
-
+import warnings
 import cv2
 from keras.layers import Lambda, Dense, TimeDistributed, Input
 from keras.models import Model
-from keras.preprocessing import image
 import keras.backend as K
-import PIL
-from keras.applications.vgg16 import VGG16 # as keras has own implementation of VGG16 the own implementation
-                                           # is no longer needed
+from keras.applications.vgg16 import VGG16 # as keras has own implementation of VGG16 the own implementation is no longer needed
 from .RoiPooling import RoiPooling
 from .get_regions import rmac_regions, get_size_vgg_feature_map
 from .utils import *
 import scipy.io
 import numpy as np
-import matplotlib.pyplot as plt
+
+
 K.set_image_dim_ordering('th')
-import warnings
 warnings.filterwarnings("ignore")
+
+
 INPUT_DIMENSION = (224, 224)
 vector_size = 512
 

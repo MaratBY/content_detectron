@@ -9,32 +9,26 @@ from . import rmac
 
 
 def get_frame(frame_index, video):
-	"""
-	The function get_frame with the given position of frame index and videocapture
-	variable returns the frame as an image object in the form of numpy ndarray.
-	:param frame_index: int frame index
-	:param video: local url for the video file
-	:return: image of the frame in the form of numpy ndarray
-	"""
 	video.set(1, frame_index)
 	_, img = video.read()
 	return img
 
+
 fouriers = [
 	[1, 1, 1, 1, 1, 1, 1, 1],
 	[-1, 1, -1, 1, 1, -1, 1, -1],
-	[-sqrt(2)/2, 0, sqrt(2)/ 2, -1, 1, -sqrt(2)/2, 0, sqrt(2)/2],
-	[-sqrt(2)/2, -1, -sqrt(2)/2, 0, 0, sqrt(2)/2, 1, sqrt(2)/2],
+	[-sqrt(2) / 2, 0, sqrt(2) / 2, -1, 1, -sqrt(2) / 2, 0, sqrt(2) / 2],
+	[-sqrt(2) / 2, -1, -sqrt(2) / 2, 0, 0, sqrt(2) / 2, 1, sqrt(2) / 2],
 	[0, -1, 0, 1, 1, 0, -1, 0],
 	[1, 0, -1, 0, 0, -1, 0, 1],
-	[sqrt(2)/2, 0, -sqrt(2)/2, -1, 1, sqrt(2)/2, 0, -sqrt(2)/2],
-	[-sqrt(2)/2, 1, -sqrt(2)/2, 0, 0, sqrt(2)/2, -1, sqrt(2)/2]
+	[sqrt(2) / 2, 0, -sqrt(2) / 2, -1, 1, sqrt(2) / 2, 0, -sqrt(2) / 2],
+	[-sqrt(2) / 2, 1, -sqrt(2) / 2, 0, 0, sqrt(2) / 2, -1, sqrt(2) / 2]
 ]
 
 for i, f in enumerate(fouriers):
-	f.insert(4,0)
+	f.insert(4, 0)
 	fouriers[i] = np.array(f)
-	fouriers[i] = fouriers[i].reshape((3,3)).astype('float32')
+	fouriers[i] = fouriers[i].reshape((3, 3)).astype('float32')
 
 max_vals = []
 for f in fouriers:
@@ -52,6 +46,7 @@ def color_texture_moments(img):
 			r = r / max_val
 			result.append(r.mean())
 			result.append(r.std())
+
 	return result
 
 
@@ -61,12 +56,6 @@ def cnn_feature_vectors(img):
 
 
 def get_img_color_hist(img, binsize):
-	"""
-	Returns image color histogram as np ndarray.
-	:param img: image array
-	:param binsize: binsize of histogram
-	:return: image histogram
-	"""
 	channels = cv2.split(img)
 	main = np.zeros((0, 1))
 	# channels iteration process
@@ -75,7 +64,7 @@ def get_img_color_hist(img, binsize):
 		main = np.append(main, hist)
 	# normalization
 	main = main / (img.shape[0] * img.shape[1])
-	return  main.astype('float32')
+	return main.astype('float32')
 
 
 def color_hist(img):
@@ -84,14 +73,6 @@ def color_hist(img):
 
 
 def construct_feature_vectors(video_filename, result_dir_name, vector_function, framejump):
-	"""
-	Converts video file to a list of feature vectors and saves it as pickle file.
-	:param video_filename: video path
-	:param result_dir_name: output path
-	:param vector_function: vector function
-	:param framejump: frame to skip
-	:return: None
-	"""
 	base_video_fn = os.path.basename(video_filename)
 	video = cv2.VideoCapture(video_filename)
 	series_dir = os.path.dirname(video_filename)
@@ -108,7 +89,7 @@ def construct_feature_vectors(video_filename, result_dir_name, vector_function, 
 	os.makedirs(os.path.dirname(vectors_filename), exist_ok=True)
 	if not os.path.isfile(vectors_filename):
 		feature_vectors = []
-		total = int(video.get(cv2.CAP_PROP_FRAME_COUNT)/framejump) - 1
+		total = int(video.get(cv2.CAP_PROP_FRAME_COUNT) / framejump) - 1
 		for i in tqdm(range(total)):
 			img = get_frame(i * framejump, video)
 			feature_vector = vector_function(img)
